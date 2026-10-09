@@ -1,0 +1,22 @@
+---
+import type { MenuItem } from '../data/MenuItem';
+const { item }:{ item: MenuItem } = Astro.props;
+---
+<article class={`product-card ${item.tone}`}>
+  <div class="drink-art" aria-hidden="true"><span>{item.icon}</span><i></i></div>
+  <div class="product-info"><h3>{item.name}</h3><p>{item.detail}</p><strong>${item.price}</strong></div>
+  <button class="add-button" data-name={item.name} data-price={item.price} data-category={item.category} data-size={item.size} aria-label={`Agregar ${item.name}`}><span>+</span></button>
+</article>
+<script>
+  document.querySelectorAll('.add-button').forEach((button) => {
+    if (button.dataset.ready) return;
+    button.dataset.ready = 'true';
+    button.addEventListener('click', () => {
+      const cart = JSON.parse(localStorage.getItem('marea-cart') || '[]');
+      cart.push({ name: button.dataset.name, price: Number(button.dataset.price), category: button.dataset.category, size: button.dataset.size });
+      localStorage.setItem('marea-cart', JSON.stringify(cart));
+      document.querySelectorAll('[data-cart-count]').forEach((count) => count.textContent = cart.length);
+      button.classList.add('added'); document.querySelectorAll('.icon-button, .order-fab').forEach((cartIcon) => { cartIcon.classList.remove('cart-bump'); void cartIcon.offsetWidth; cartIcon.classList.add('cart-bump'); }); setTimeout(() => button.classList.remove('added'), 400);
+    });
+  });
+</script>

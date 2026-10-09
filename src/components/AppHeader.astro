@@ -1,0 +1,12 @@
+---
+const { title = 'MAREA', back = false } = Astro.props;
+---
+<header class="topbar">
+  {back ? <a class="back" href="/" aria-label="Volver">←</a> : <a class="brand" href="/" aria-label="Marea Café, inicio"><img src="/brand-mark.svg" alt="" width="36" height="36" /><span>MAREA<br /><em>CAFÉ</em></span></a>}
+  <strong class="page-title">{back ? title : ''}</strong>
+  <a class="icon-button" href="/carrito/" aria-label="Ver carrito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4L20 8H7"/><circle cx="10" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg><span class="cart-count" data-cart-count>0</span></a>
+</header>
+<script>
+  const items = JSON.parse(localStorage.getItem('marea-cart') || '[]');
+  document.querySelectorAll('[data-cart-count]').forEach((count) => count.textContent = items.length);
+</script>

@@ -1,11 +1,9 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import AppHeader from '../components/AppHeader.astro';
+import BottomNav from '../components/BottomNav.astro';
+import ProductCard from '../components/ProductCard.astro';
+import VisitCheckIn from '../components/VisitCheckIn.astro';
+import { menuItems } from '../data/MenuItem';
 ---
-
-<Layout>
-	<Welcome />
-</Layout>
+<Layout title="Marea Café · Inicio"><main class="app-shell"><section class="app"><AppHeader /><div class="content"><p class="eyebrow">BUEN DÍA, SOFÍA</p><h1>Un respiro<br /><i>para tu día.</i></h1><section class="hero-card"><div class="hero-copy"><span>EDICIÓN DE OTOÑO</span><strong>El café<br />que te abraza.</strong><a href="/menu/">Ver bebidas →</a></div><img src="/coffee-hero.svg" alt="Vaso de café Marea con hojas de otoño" /></section><VisitCheckIn /><div class="section-heading"><div><p class="eyebrow">MENÚ DEL DÍA</p><h2>Hecho para ti</h2></div><a href="/menu/">Ver todo</a></div><div class="chips"><button class="active">Popular</button><button>Espresso</button><button>Fríos</button></div><section class="product-list"><ProductCard item={menuItems[0]} /><ProductCard item={menuItems[1]} /></section><section class="rewards-card"><span>TUS OLAS</span><strong><b>08</b> / 12</strong><p>Estás a 4 olas de un café por la casa.</p><div class="progress"><i></i></div></section></div><BottomNav active="inicio" /></section></main></Layout>

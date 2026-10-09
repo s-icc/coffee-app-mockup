@@ -1,0 +1,4 @@
+---
+import Layout from '../layouts/Layout.astro'; import AppHeader from '../components/AppHeader.astro'; import BottomNav from '../components/BottomNav.astro'; import ProductCard from '../components/ProductCard.astro'; import { menuItems } from '../data/MenuItem';
+---
+<Layout title="Marea Café · Menú"><main class="app-shell"><section class="app"><AppHeader title="Menú" back={true} /><div class="content"><p class="eyebrow">TODO EL MENÚ</p><h1>Una pausa<br /><i>a tu medida.</i></h1><div class="chips"><button class="active">Todos</button><button>Espresso</button><button>Fríos</button><button>Pan dulce</button></div><section class="product-list">{menuItems.map((item) => <ProductCard item={item} />)}</section></div><BottomNav active="menu" /></section></main></Layout>

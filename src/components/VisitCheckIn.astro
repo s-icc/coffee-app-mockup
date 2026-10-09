@@ -1,0 +1,9 @@
+<section class="visit-card visit-spotlight" id="visitCard" tabindex="0" role="button" aria-label="Registrar visita y mostrar código QR">
+  <div class="visit-icon">✦</div><div><span>MI CAFÉ DE HOY</span><strong>Registra tu visita</strong><small>Muestra el QR en mostrador y gana una ola</small></div><button class="visit-cta" id="visitButton">Mostrar QR <b>→</b></button>
+</section>
+<div class="qr-modal" id="qrModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="qrTitle"><div class="qr-sheet"><button class="close" id="closeQr" aria-label="Cerrar">×</button><p class="eyebrow">CHECK-IN MAREA</p><h2 id="qrTitle">Muestra este código<br />en el mostrador</h2><div class="qr-wrap"><img src="/visit-qr.svg" alt="Código QR para registrar tu visita" /><span class="scan-line"></span></div><p class="qr-note">Válido para una visita hoy · Marea Roma Norte</p><div class="visit-success" id="visitSuccess">✦ <strong>¡Nueva ola registrada!</strong><span>Ya llevas 9 de 12 olas.</span></div></div></div>
+<script>
+  const card = document.querySelector('#visitCard'); const modal = document.querySelector('#qrModal'); const close = document.querySelector('#closeQr'); const success = document.querySelector('#visitSuccess');
+  const open = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); setTimeout(() => success.classList.add('show'), 650); };
+  card.addEventListener('click', open); card.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') open(); }); close.addEventListener('click', () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); success.classList.remove('show'); }); modal.addEventListener('click', (event) => { if (event.target === modal) close.click(); });
+</script>

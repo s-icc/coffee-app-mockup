@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro'; import AppHeader from '../components/AppHeader.astro'; import BottomNav from '../components/BottomNav.astro';
+---
+<Layout title="Marea Café · Carrito"><main class="app-shell"><section class="app"><AppHeader title="Tu pedido" back={true} /><div class="content"><p class="eyebrow">PICK & GO</p><h1>Tu café,<br /><i>sin esperar.</i></h1><div id="cartItems"></div><div class="empty" id="emptyCart">☕<strong>Tu pedido está vacío</strong><p>Explora el menú para agregar tu próxima bebida.</p><a class="primary-button" href="/menu/" style="margin-top:22px;text-decoration:none">Ver menú <span>→</span></a></div><section class="info-card" id="pickup"><span>RECOGIDA</span><h3>Marea Café · Roma Norte</h3><p>Av. Oaxaca 99 · Lista en 12 min</p></section><button class="primary-button" id="checkout" style="margin-top:16px">Confirmar pedido <span id="total">$0</span></button></div><BottomNav /></section></main></Layout>
+<script>
+  const cart = JSON.parse(localStorage.getItem('marea-cart') || '[]'); const area = document.querySelector('#cartItems'); const empty = document.querySelector('#emptyCart'); const pickup = document.querySelector('#pickup'); const checkout = document.querySelector('#checkout'); const total = cart.reduce((sum, item) => sum + item.price, 0);
+  if (cart.length) { empty.hidden = true; area.innerHTML = cart.map((item) => `<div class="cart-item"><i>☕</i><div><strong>${item.name}</strong><span>Pick & Go · 1 bebida</span></div><b>$${item.price}</b></div>`).join(''); document.querySelector('#total').textContent = `$${total}`; } else { pickup.hidden = true; checkout.hidden = true; }
+  checkout.addEventListener('click', () => { localStorage.removeItem('marea-cart'); checkout.textContent = '¡Pedido confirmado!'; });
+</script>
