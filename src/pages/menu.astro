@@ -1,4 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro'; import AppHeader from '../components/AppHeader.astro'; import BottomNav from '../components/BottomNav.astro'; import ProductCard from '../components/ProductCard.astro'; import { menuItems } from '../data/MenuItem';
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.astro';
+import BottomNav from '../components/BottomNav.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { menuItems } from '../data/MenuItem';
 ---
-<Layout title="Marea Café · Menú"><main class="app-shell"><section class="app"><AppHeader title="Menú" back={true} /><div class="content"><p class="eyebrow">TODO EL MENÚ</p><h1>Una pausa<br /><i>a tu medida.</i></h1><div class="chips"><button class="active">Todos</button><button>Espresso</button><button>Fríos</button><button>Pan dulce</button></div><section class="product-list">{menuItems.map((item) => <ProductCard item={item} />)}</section></div><BottomNav active="menu" /></section></main></Layout>
+<Layout title="Broonic · Menu"><main class="app-shell"><section class="app"><AppHeader title="The menu" back={true} /><div class="content"><p class="eyebrow">FIND YOUR FAVORITE</p><h1>SOMETHING<br />GOOD IS<br /><i>BREWING.</i></h1><div class="chips" role="group" aria-label="Filter drinks"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="Espresso" aria-pressed="false">Espresso</button><button data-filter="Iced" aria-pressed="false">Iced</button><button data-filter="Matcha" aria-pressed="false">Matcha</button></div><section class="product-list" aria-label="Coffee menu">{menuItems.map((item) => <ProductCard item={item} />)}</section></div><BottomNav active="menu" /></section></main>
+<script>document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((button) => button.addEventListener('click', () => { const category = button.dataset.filter; document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((chip) => { const active = chip === button; chip.classList.toggle('active', active); chip.setAttribute('aria-pressed', String(active)); }); document.querySelectorAll<HTMLElement>('.product-card').forEach((card) => { card.hidden = category !== 'all' && card.dataset.category !== category; }); }));</script>
+</Layout>

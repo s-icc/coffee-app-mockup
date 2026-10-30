@@ -1,29 +1,22 @@
-# Marea Café
+# Broonic Coffee Club
 
-Prototipo mobile-first de una app de cafetería para explorar bebidas, crear pedidos Pick & Go y registrar visitas en tienda.
+An Astro prototype with two connected experiences: an editorial landing page and a mobile coffee club app. The supplied Broonic logo artwork is used throughout.
 
-## Documentación
+## Routes
 
-- [Arquitectura, componentes, datos y flujos](APP_STRUCTURE.md)
-- [Sistema de diseño](DESIGN_SYSTEM.md)
+- `/` — landing page
+- `/app/` — mobile app home
+- `/menu/`, `/bebidas/`, `/carrito/`, `/perfil/` — app screens
 
-## Desarrollo
+## Development
 
 ```sh
 npm install
 astro dev --background
 ```
 
-Administración del servidor de desarrollo:
+Manage the server with `astro dev status`, `astro dev logs`, and `astro dev stop`. Run `npm run build` for a production build.
 
-```sh
-astro dev status
-astro dev logs
-astro dev stop
-```
+The app uses browser local storage for a demo cart. Its QR check-in, rewards, profile, location, and order confirmation are illustrative; no payment or store system is connected. See [APP_STRUCTURE.md](APP_STRUCTURE.md) and [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 
-## Verificación
-
-```sh
-npm run build
-```
+The mobile experience includes a PWA manifest and service worker. Install it through a browser's app-install option on HTTPS or `localhost`; a local network `http://` address does not meet browser PWA security requirements.

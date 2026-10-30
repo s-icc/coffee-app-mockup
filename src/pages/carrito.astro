@@ -1,9 +1,21 @@
 ---
-import Layout from '../layouts/Layout.astro'; import AppHeader from '../components/AppHeader.astro'; import BottomNav from '../components/BottomNav.astro';
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.astro';
+import BottomNav from '../components/BottomNav.astro';
 ---
-<Layout title="Marea Café · Carrito"><main class="app-shell"><section class="app"><AppHeader title="Tu pedido" back={true} /><div class="content"><p class="eyebrow">PICK & GO</p><h1>Tu café,<br /><i>sin esperar.</i></h1><div id="cartItems"></div><div class="empty" id="emptyCart">☕<strong>Tu pedido está vacío</strong><p>Explora el menú para agregar tu próxima bebida.</p><a class="primary-button" href="/menu/" style="margin-top:22px;text-decoration:none">Ver menú <span>→</span></a></div><section class="info-card" id="pickup"><span>RECOGIDA</span><h3>Marea Café · Roma Norte</h3><p>Av. Oaxaca 99 · Lista en 12 min</p></section><button class="primary-button" id="checkout" style="margin-top:16px">Confirmar pedido <span id="total">$0</span></button></div><BottomNav /></section></main></Layout>
+<Layout title="Broonic · Your order"><main class="app-shell"><section class="app"><AppHeader title="Your order" back={true} /><div class="content"><p class="eyebrow">PICK UP & GO</p><h1>GOOD COFFEE,<br /><i>ON THE WAY.</i></h1><div id="cartItems"></div><div class="empty" id="emptyCart"><img src="/broonic-round.png" alt="" width="80" height="80" style="border-radius:50%" /><strong>Nothing in your cup yet.</strong><p>Explore the menu and find your next favorite.</p><a class="primary-button" href="/menu/">SEE THE MENU <span>↗</span></a></div><section class="info-card" id="pickup"><span>PICK UP LOCATION</span><h2>Broonic Coffee Club</h2><p>Ready to collect when you are.</p></section><button class="primary-button" id="checkout" style="margin-top:16px">PLACE ORDER <span id="total">$0</span></button><p id="orderStatus" role="status" aria-live="polite"></p></div><BottomNav /></section></main>
 <script>
-  const cart = JSON.parse(localStorage.getItem('marea-cart') || '[]'); const area = document.querySelector('#cartItems'); const empty = document.querySelector('#emptyCart'); const pickup = document.querySelector('#pickup'); const checkout = document.querySelector('#checkout'); const total = cart.reduce((sum, item) => sum + item.price, 0);
-  if (cart.length) { empty.hidden = true; area.innerHTML = cart.map((item) => `<div class="cart-item"><i>☕</i><div><strong>${item.name}</strong><span>Pick & Go · 1 bebida</span></div><b>$${item.price}</b></div>`).join(''); document.querySelector('#total').textContent = `$${total}`; } else { pickup.hidden = true; checkout.hidden = true; }
-  checkout.addEventListener('click', () => { localStorage.removeItem('marea-cart'); checkout.textContent = '¡Pedido confirmado!'; });
+  type CartItem = { name: string; price: number };
+  const cart: CartItem[] = JSON.parse(localStorage.getItem('broonic-cart') || '[]');
+  const area = document.querySelector<HTMLElement>('#cartItems')!;
+  const empty = document.querySelector<HTMLElement>('#emptyCart')!;
+  const pickup = document.querySelector<HTMLElement>('#pickup')!;
+  const checkout = document.querySelector<HTMLButtonElement>('#checkout')!;
+  if (cart.length) {
+    empty.hidden = true;
+    cart.forEach((item) => { const row = document.createElement('div'); row.className = 'cart-item'; const icon = document.createElement('i'); icon.textContent = '☕'; const copy = document.createElement('div'); const name = document.createElement('strong'); name.textContent = item.name; const detail = document.createElement('span'); detail.textContent = 'Pick up · 1 drink'; copy.append(name, detail); const price = document.createElement('b'); price.textContent = `$${item.price}`; row.append(icon, copy, price); area.append(row); });
+    document.querySelector<HTMLElement>('#total')!.textContent = `$${cart.reduce((sum, item) => sum + item.price, 0)}`;
+  } else { pickup.hidden = true; checkout.hidden = true; }
+  checkout.addEventListener('click', () => { localStorage.removeItem('broonic-cart'); area.replaceChildren(); pickup.hidden = true; checkout.hidden = true; document.querySelector<HTMLElement>('#orderStatus')!.textContent = 'Order placed! See you soon at Broonic.'; document.querySelectorAll('[data-cart-count]').forEach((count) => count.textContent = '0'); });
 </script>
+</Layout>

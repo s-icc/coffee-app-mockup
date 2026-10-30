@@ -1,4 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro'; import AppHeader from '../components/AppHeader.astro'; import BottomNav from '../components/BottomNav.astro'; import ProductCard from '../components/ProductCard.astro'; import { menuItems } from '../data/MenuItem';
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.astro';
+import BottomNav from '../components/BottomNav.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { menuItems } from '../data/MenuItem';
 ---
-<Layout title="Marea Café · Mis bebidas"><main class="app-shell"><section class="app"><AppHeader title="Mis bebidas" back={true} /><div class="content"><p class="eyebrow">TU HISTORIAL</p><h1>Las de<br /><i>siempre.</i></h1><section class="banner"><strong>☕ Latte de miel</strong><p>Tu bebida favorita · pedida 14 veces</p></section><div class="section-heading" style="margin-top:30px"><div><p class="eyebrow">PEDIDAS RECIENTEMENTE</p><h2>Vuelve a pedir</h2></div></div><section class="product-list" style="margin-top:17px"><ProductCard item={menuItems[0]} /><ProductCard item={menuItems[2]} /></section><section class="info-card"><span>RECOMENDACIÓN</span><h3>Prueba el Matcha nube</h3><p>Suave, cremoso y perfecto para una mañana lenta.</p></section></div><BottomNav active="bebidas" /></section></main></Layout>
+<Layout title="Broonic · Your drinks"><main class="app-shell"><section class="app"><AppHeader title="Your drinks" back={true} /><div class="content"><p class="eyebrow">YOUR USUALS</p><h1>THE ONES<br />YOU <i>LOVE.</i></h1><section class="banner"><strong>Honey oat latte</strong><p>For mornings that need a little sweetness.</p></section><div class="section-heading"><div><p class="eyebrow">ORDER IT AGAIN</p><h2>Back for more?</h2></div></div><section class="product-list"><ProductCard item={menuItems[0]} /><ProductCard item={menuItems[2]} /></section><section class="info-card"><span>TRY SOMETHING NEW</span><h2>Meet cloud matcha.</h2><p>Soft, creamy, and made for a slow morning.</p></section></div><BottomNav active="drinks" /></section></main></Layout>

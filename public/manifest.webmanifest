@@ -1,0 +1,17 @@
+{
+  "name": "Broonic Coffee Club",
+  "short_name": "Broonic",
+  "id": "/app/",
+  "description": "The social side of coffee, in your pocket.",
+  "lang": "en",
+  "start_url": "/app/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#fbf7ef",
+  "theme_color": "#790514",
+  "categories": ["food", "lifestyle", "shopping"],
+  "icons": [
+    { "src": "/broonic-round.png", "sizes": "591x591", "type": "image/png", "purpose": "any" }
+  ]
+}

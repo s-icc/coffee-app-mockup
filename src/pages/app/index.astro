@@ -1,0 +1,9 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AppHeader from '../../components/AppHeader.astro';
+import BottomNav from '../../components/BottomNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import VisitCheckIn from '../../components/VisitCheckIn.astro';
+import { menuItems } from '../../data/MenuItem';
+---
+<Layout title="Broonic · Your coffee club"><main class="app-shell"><section class="app"><AppHeader /><div class="content"><p class="eyebrow">HELLO, COFFEE LOVER</p><h1>YOUR DAY LOOKS<br />BETTER WITH<br /><i>COFFEE.</i></h1><section class="hero-card"><div class="hero-copy"><span>THE BROONIC PICK</span><strong>A LITTLE<br />SWEET.<br />A LOT TO LOVE.</strong><a href="/menu/">ORDER YOURS ↗</a></div><img src="/broonic-round.png" alt="Broonic dog logo" /></section><VisitCheckIn /><div class="section-heading"><div><p class="eyebrow">GOOD THINGS BREWING</p><h2>Made for your moment</h2></div><a href="/menu/">SEE ALL ↗</a></div><section class="product-list"><ProductCard item={menuItems[0]} /><ProductCard item={menuItems[1]} /></section><section class="rewards-card"><span>YOUR COFFEE CLUB CARD</span><strong><b>08</b> / 12 VISITS</strong><p>Four more visits until your next cup is on us.</p><div class="progress"><i></i></div></section></div><BottomNav active="home" /></section></main></Layout>
