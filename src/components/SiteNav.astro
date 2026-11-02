@@ -1,0 +1,36 @@
+---
+const { current = 'home' } = Astro.props;
+---
+<header class="site-header" data-site-nav>
+  <a class="site-brand" href="/" aria-label="Broonic home">BROONIC<span>®</span></a>
+  <nav class="site-links" aria-label="Main navigation">
+    <a href="/" aria-current={current === 'home' ? 'page' : undefined}>Home</a>
+    <a href="/menu/" aria-current={current === 'menu' ? 'page' : undefined}>Menu</a>
+    <a href="/#story">Our story</a>
+    <a href="/#club">The club</a>
+  </nav>
+  <a class="header-cta" href="/app/">OPEN THE APP <span>↗</span></a>
+  <button class="site-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-site-nav"><span></span><span></span></button>
+</header>
+<nav class="mobile-site-nav" id="mobile-site-nav" aria-label="Mobile navigation" inert>
+  <a href="/">Home <span>01</span></a><a href="/menu/">Menu <span>02</span></a><a href="/#story">Our story <span>03</span></a><a href="/#club">The club <span>04</span></a><a href="/app/">Open the app <span>↗</span></a>
+</nav>
+<script>
+  import gsap from 'gsap';
+  const header = document.querySelector<HTMLElement>('[data-site-nav]');
+  const panel = document.querySelector<HTMLElement>('#mobile-site-nav');
+  const toggle = document.querySelector<HTMLButtonElement>('.site-menu-toggle');
+  if (header && panel && toggle) {
+    const sync = () => header.classList.toggle('is-scrolled', window.scrollY > 36);
+    sync(); window.addEventListener('scroll', sync, { passive: true });
+    const close = () => { header.classList.remove('is-open'); panel.classList.remove('is-open'); panel.inert = true; toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open navigation'); document.body.classList.remove('nav-open'); };
+    toggle.addEventListener('click', () => {
+      const opening = !header.classList.contains('is-open');
+      if (!opening) { close(); return; }
+      header.classList.add('is-open'); panel.classList.add('is-open'); panel.inert = false; toggle.setAttribute('aria-expanded','true'); toggle.setAttribute('aria-label','Close navigation'); document.body.classList.add('nav-open');
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.fromTo(panel.querySelectorAll('a'), { y: 22, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: .06, duration: .42, ease: 'power3.out' });
+    });
+    panel.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+  }
+</script>

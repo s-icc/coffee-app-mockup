@@ -4,7 +4,20 @@ import AppHeader from '../components/AppHeader.astro';
 import BottomNav from '../components/BottomNav.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { menuItems } from '../data/MenuItem';
+import SiteNav from '../components/SiteNav.astro';
 ---
-<Layout title="Broonic · Menu"><main class="app-shell"><section class="app"><AppHeader title="The menu" back={true} /><div class="content"><p class="eyebrow">FIND YOUR FAVORITE</p><h1>SOMETHING<br />GOOD IS<br /><i>BREWING.</i></h1><div class="chips" role="group" aria-label="Filter drinks"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="Espresso" aria-pressed="false">Espresso</button><button data-filter="Iced" aria-pressed="false">Iced</button><button data-filter="Matcha" aria-pressed="false">Matcha</button></div><section class="product-list" aria-label="Coffee menu">{menuItems.map((item) => <ProductCard item={item} />)}</section></div><BottomNav active="menu" /></section></main>
+<Layout title="Broonic · Menu">
+<div class="desktop-menu-page">
+  <SiteNav current="menu" />
+  <main>
+    <section class="menu-photo-hero"><div><p>THE SOCIAL SIDE OF COFFEE / 02</p><h1>THE<br />MENU<span>✳</span></h1><a href="#printed-menu">EXPLORE THE MENU ↓</a></div></section>
+    <section class="printed-menu" id="printed-menu">
+      <div class="printed-menu-head"><div><p>MADE FOR YOUR MOMENT</p><h2>GOOD THINGS<br />ON THE MENU.</h2></div><img src="/broonic-round.png" alt="Broonic dog seal" /></div>
+      <div class="printed-menu-layout"><div class="printed-menu-feature"><p>01 / SIGNATURE DRINKS</p><h3>A LITTLE<br />SOMETHING<br />SPECIAL.</h3><div class="menu-rule"></div>{menuItems.slice(0,2).map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.description}</small></div><span>${item.price}</span></div>)}</div><div class="printed-menu-columns"><div class="printed-category"><h3>ESPRESSO <span>☕</span></h3>{menuItems.filter(item => item.category === 'Espresso').map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.detail}</small></div><span>${item.price}</span></div>)}</div><div class="printed-category"><h3>ICED & COLD <span>✳</span></h3>{menuItems.filter(item => item.category === 'Iced').map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.detail}</small></div><span>${item.price}</span></div>)}</div><div class="printed-category"><h3>MATCHA <span>✳</span></h3>{menuItems.filter(item => item.category === 'Matcha').map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.detail}</small></div><span>${item.price}</span></div>)}</div><a class="printed-order" href="/app/">FIND YOUR NEXT FAVORITE <span>↗</span></a></div></div>
+      <div class="printed-menu-foot"><span>BROONIC® COFFEE CLUB</span><span>GOOD COFFEE. BETTER COMPANY.</span><a href="/app/">ORDER IN THE APP ↗</a></div>
+    </section>
+  </main>
+</div>
+<main class="app-shell mobile-menu-page"><section class="app"><AppHeader title="The menu" back={true} /><div class="content"><p class="eyebrow">FIND YOUR FAVORITE</p><h1>SOMETHING<br />GOOD IS<br /><i>BREWING.</i></h1><div class="chips" role="group" aria-label="Filter drinks"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="Espresso" aria-pressed="false">Espresso</button><button data-filter="Iced" aria-pressed="false">Iced</button><button data-filter="Matcha" aria-pressed="false">Matcha</button></div><section class="product-list" aria-label="Coffee menu">{menuItems.map((item) => <ProductCard item={item} />)}</section></div><BottomNav active="menu" /></section></main>
 <script>document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((button) => button.addEventListener('click', () => { const category = button.dataset.filter; document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((chip) => { const active = chip === button; chip.classList.toggle('active', active); chip.setAttribute('aria-pressed', String(active)); }); document.querySelectorAll<HTMLElement>('.product-card').forEach((card) => { card.hidden = category !== 'all' && card.dataset.category !== category; }); }));</script>
 </Layout>

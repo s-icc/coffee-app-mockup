@@ -3,6 +3,7 @@ interface Props { title?: string; description?: string; }
 const { title = 'Broonic Coffee Club', description = 'Broonic — the social side of coffee. Good coffee, better company.' } = Astro.props;
 import '../styles/app.css';
 import '../styles/navigation.css';
+import '../styles/site-enhancements.css';
 ---
 <!doctype html>
 <html lang="en">
@@ -11,9 +12,9 @@ import '../styles/navigation.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#790514" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href="/broonic-round.png" />
+    <link rel="icon" type="image/png" href="/icon-192.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/broonic-round.png" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />

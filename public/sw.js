@@ -1,5 +1,5 @@
-const CACHE_NAME = 'broonic-club-v3';
-const APP_SHELL = ['/', '/app/', '/menu/', '/bebidas/', '/perfil/', '/carrito/', '/manifest.webmanifest', '/broonic-wordmark.png', '/broonic-round.png', '/broonic-dog.png', '/visit-qr.svg'];
+const CACHE_NAME = 'broonic-club-v4';
+const APP_SHELL = ['/', '/app/', '/menu/', '/bebidas/', '/perfil/', '/carrito/', '/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/broonic-wordmark.png', '/broonic-round.png', '/broonic-dog.png', '/broonic-menu-photo.png', '/visit-qr.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
