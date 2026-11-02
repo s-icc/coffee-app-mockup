@@ -1,23 +1,75 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
 import AppHeader from '../components/AppHeader.astro';
 import BottomNav from '../components/BottomNav.astro';
-import ProductCard from '../components/ProductCard.astro';
-import { menuItems } from '../data/MenuItem';
-import SiteNav from '../components/SiteNav.astro';
+import MenuBoard from '../components/MenuBoard.astro';
+import { getImage } from 'astro:assets';
+import menuPhoto from '../assets/broonic-menu-photo.png';
+const hero = await getImage({ src: menuPhoto, width: 1600, format: 'webp', quality: 74 });
+const categories = ['Espresso', 'Iced', 'Matcha', 'Chai', 'Refreshers', 'Bakery', 'Food', 'Extras'];
+const sizes = ['8 oz', '12 oz', '16 oz', 'One size'];
+const types = ['Hot', 'Iced', 'Food', 'Add-on'];
 ---
 <Layout title="Broonic · Menu">
-<div class="desktop-menu-page">
-  <SiteNav current="menu" />
-  <main>
-    <section class="menu-photo-hero"><div><p>THE SOCIAL SIDE OF COFFEE / 02</p><h1>THE<br />MENU<span>✳</span></h1><a href="#printed-menu">EXPLORE THE MENU ↓</a></div></section>
-    <section class="printed-menu" id="printed-menu">
-      <div class="printed-menu-head"><div><p>MADE FOR YOUR MOMENT</p><h2>GOOD THINGS<br />ON THE MENU.</h2></div><img src="/broonic-round.png" alt="Broonic dog seal" /></div>
-      <div class="printed-menu-layout"><div class="printed-menu-feature"><p>01 / SIGNATURE DRINKS</p><h3>A LITTLE<br />SOMETHING<br />SPECIAL.</h3><div class="menu-rule"></div>{menuItems.slice(0,2).map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.description}</small></div><span>${item.price}</span></div>)}</div><div class="printed-menu-columns"><div class="printed-category"><h3>ESPRESSO <span>☕</span></h3>{menuItems.filter(item => item.category === 'Espresso').map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.detail}</small></div><span>${item.price}</span></div>)}</div><div class="printed-category"><h3>ICED & COLD <span>✳</span></h3>{menuItems.filter(item => item.category === 'Iced').map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.detail}</small></div><span>${item.price}</span></div>)}</div><div class="printed-category"><h3>MATCHA <span>✳</span></h3>{menuItems.filter(item => item.category === 'Matcha').map(item => <div class="printed-item"><div><strong>{item.name}</strong><small>{item.detail}</small></div><span>${item.price}</span></div>)}</div><a class="printed-order" href="/app/">FIND YOUR NEXT FAVORITE <span>↗</span></a></div></div>
-      <div class="printed-menu-foot"><span>BROONIC® COFFEE CLUB</span><span>GOOD COFFEE. BETTER COMPANY.</span><a href="/app/">ORDER IN THE APP ↗</a></div>
-    </section>
-  </main>
-</div>
-<main class="app-shell mobile-menu-page"><section class="app"><AppHeader title="The menu" back={true} /><div class="content"><p class="eyebrow">FIND YOUR FAVORITE</p><h1>SOMETHING<br />GOOD IS<br /><i>BREWING.</i></h1><div class="chips" role="group" aria-label="Filter drinks"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="Espresso" aria-pressed="false">Espresso</button><button data-filter="Iced" aria-pressed="false">Iced</button><button data-filter="Matcha" aria-pressed="false">Matcha</button></div><section class="product-list" aria-label="Coffee menu">{menuItems.map((item) => <ProductCard item={item} />)}</section></div><BottomNav active="menu" /></section></main>
-<script>document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((button) => button.addEventListener('click', () => { const category = button.dataset.filter; document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((chip) => { const active = chip === button; chip.classList.toggle('active', active); chip.setAttribute('aria-pressed', String(active)); }); document.querySelectorAll<HTMLElement>('.product-card').forEach((card) => { card.hidden = category !== 'all' && card.dataset.category !== category; }); }));</script>
+  <div class="desktop-menu-page">
+    <SiteNav current="menu" />
+    <main>
+      <section class="menu-photo-hero" style={`background-image:linear-gradient(0deg,rgb(16 4 3/.72),rgb(16 4 3/.03) 60%),url('${hero.src}')`}><div><p>THE SOCIAL SIDE OF COFFEE / 02</p><h1>THE<br />MENU<span>✳</span></h1><a href="#printed-menu">EXPLORE THE MENU ↓</a></div></section>
+      <section class="printed-menu menu-board" id="printed-menu">
+        <div class="menu-filters desktop-filters" aria-label="Filter desktop menu">
+          <label>Category<select data-menu-filter="category" data-scope="desktop"><option value="all">All categories</option>{categories.map(category => <option value={category}>{category}</option>)}</select></label>
+          <label>Type<select data-menu-filter="type" data-scope="desktop"><option value="all">All types</option>{types.map(type => <option value={type}>{type}</option>)}</select></label>
+          <label>Size<select data-menu-filter="size" data-scope="desktop"><option value="all">All sizes</option>{sizes.map(size => <option value={size}>{size}</option>)}</select></label>
+          <button type="button" data-reset-filters="desktop">CLEAR FILTERS ↺</button><span data-result-count="desktop" role="status"></span>
+        </div>
+        <div class="menu-board-layout">
+          <MenuBoard scope="desktop" />
+          <aside class="menu-preview-panel" aria-label="Selected item preview"><div class="menu-preview-canvas" data-menu-cup></div><div class="menu-preview-copy"><p>THE BROONIC PICK</p><h2 data-preview-name>CHOOSE A CUP.</h2><span data-preview-description>Select a menu item to see it from every angle.</span><div data-preview-prices></div></div><p class="preview-hint">DRAG TO TURN ↔</p></aside>
+        </div>
+        <div class="printed-menu-foot"><span>BROONIC® COFFEE CLUB</span><span>GOOD COFFEE. BETTER COMPANY.</span><a href="/app/">ORDER IN THE APP ↗</a></div>
+      </section>
+    </main>
+  </div>
+  <main class="app-shell mobile-menu-page"><section class="app"><AppHeader title="The menu" back={true} /><div class="content mobile-menu-content">
+    <div class="menu-filters mobile-filters" aria-label="Filter mobile menu"><label>Category<select data-menu-filter="category" data-scope="mobile"><option value="all">All categories</option>{categories.map(category => <option value={category}>{category}</option>)}</select></label><label>Type<select data-menu-filter="type" data-scope="mobile"><option value="all">All types</option>{types.map(type => <option value={type}>{type}</option>)}</select></label><label>Size<select data-menu-filter="size" data-scope="mobile"><option value="all">All sizes</option>{sizes.map(size => <option value={size}>{size}</option>)}</select></label><button type="button" data-reset-filters="mobile">CLEAR FILTERS ↺</button><span data-result-count="mobile" role="status"></span></div>
+    <section aria-label="Coffee menu" class="mobile-menu-board"><MenuBoard scope="mobile" /></section>
+  </div><BottomNav active="menu" /></section></main>
+  <dialog class="menu-preview-dialog" aria-label="3D menu item preview"><button type="button" class="preview-close" data-close-preview aria-label="Close preview">×</button><div class="menu-preview-canvas" data-menu-cup></div><div class="menu-preview-copy"><p>THE BROONIC PICK</p><h2 data-preview-name></h2><span data-preview-description></span><div data-preview-prices></div></div><p class="preview-hint">DRAG TO TURN ↔</p></dialog>
+  <script>
+    for (const scope of ['desktop', 'mobile']) {
+      const controls = [...document.querySelectorAll<HTMLSelectElement>(`[data-menu-filter][data-scope="${scope}"]`)];
+      const list = document.querySelector<HTMLElement>(`[data-menu-list="${scope}"]`);
+      if (!list) continue;
+      const items = [...list.querySelectorAll<HTMLElement>('[data-menu-item]')];
+      const update = () => {
+        const values = Object.fromEntries(controls.map(control => [control.dataset.menuFilter, control.value]));
+        let count = 0;
+        items.forEach(item => { const visible = ['category','type'].every(key => values[key] === 'all' || item.dataset[key] === values[key]) && (values.size === 'all' || item.dataset.sizes?.split('|').includes(values.size)); item.hidden = !visible; if (visible) count++; });
+        list.querySelectorAll<HTMLElement>('[data-menu-group]').forEach(group => { group.hidden = ![...group.querySelectorAll('[data-menu-item]')].some(item => !item.hasAttribute('hidden')); });
+        const empty = list.querySelector<HTMLElement>('[data-empty-menu]'); if (empty) empty.hidden = count !== 0;
+        const output = document.querySelector<HTMLElement>(`[data-result-count="${scope}"]`); if (output) output.textContent = `${count} ${count === 1 ? 'item' : 'items'}`;
+      };
+      controls.forEach(control => control.addEventListener('change', update));
+      document.querySelector(`[data-reset-filters="${scope}"]`)?.addEventListener('click', () => { controls.forEach(control => control.value = 'all'); update(); });
+      update();
+    }
+    const menuDetails = import('../data/MenuItem').then(({ menuItems }) => menuItems);
+    let disposePreview: undefined | (() => void);
+    document.querySelectorAll<HTMLElement>('[data-open-item]').forEach(trigger => trigger.addEventListener('click', async () => {
+      const item = (await menuDetails).find(entry => entry.name === trigger.dataset.openItem);
+      if (!item) return;
+      const mobile = window.matchMedia('(max-width:800px)').matches;
+      const panel = document.querySelector<HTMLElement>(mobile ? '.menu-preview-dialog' : '.menu-preview-panel')!;
+      panel.querySelector<HTMLElement>('[data-preview-name]')!.textContent = item.name;
+      panel.querySelector<HTMLElement>('[data-preview-description]')!.textContent = item.description;
+      panel.querySelector<HTMLElement>('[data-preview-prices]')!.textContent = item.priceOptions.map(option => `${option.size}  $${option.price}`).join('   ·   ');
+      if (mobile) (panel as HTMLDialogElement).showModal(); else panel.classList.add('has-selection');
+      disposePreview?.();
+      const { mountCupPreview } = await import('../scripts/coffee-cups.js');
+      disposePreview = mountCupPreview(panel.querySelector<HTMLElement>('[data-menu-cup]')!, item.tone, item.type, item.name);
+    }));
+    document.querySelector<HTMLButtonElement>('.menu-preview-dialog [data-close-preview]')?.addEventListener('click', () => { (document.querySelector('.menu-preview-dialog') as HTMLDialogElement).close(); });
+    document.querySelector('.menu-preview-dialog')?.addEventListener('close', () => { disposePreview?.(); disposePreview = undefined; });
+  </script>
 </Layout>

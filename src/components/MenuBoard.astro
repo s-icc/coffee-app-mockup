@@ -1,0 +1,23 @@
+---
+import { menuItems } from '../data/MenuItem';
+import type { MenuItem } from '../data/MenuItem';
+
+const categories = ['Espresso', 'Iced', 'Matcha', 'Chai', 'Refreshers', 'Bakery', 'Food', 'Extras'];
+const priceFor = (item: MenuItem, size: string) => {
+  const price = item.priceOptions.find(option => option.size === size)?.price;
+  return price === undefined ? (item.priceOptions[0].size === 'One size' ? '' : '—') : `$${price}`;
+};
+---
+<div class="menu-board-categories" data-menu-list={Astro.props.scope}>
+  {categories.map(category => <section class="menu-board-category" data-menu-group>
+    <h2>{category}</h2>
+    <div class="menu-board-head"><span>ITEM / TEMPERATURE</span><span>{['Bakery', 'Food', 'Extras'].includes(category) ? '' : '8 OZ'}</span><span>{['Bakery', 'Food', 'Extras'].includes(category) ? 'ONE SIZE' : '12 OZ'}</span><span>{['Bakery', 'Food', 'Extras'].includes(category) ? '' : '16 OZ'}</span></div>
+    {menuItems.filter(item => item.category === category).map(item => <button type="button" class="menu-board-item" data-menu-item data-category={item.category} data-type={item.type} data-sizes={item.priceOptions.map(option => option.size).join('|')} data-open-item={item.name} aria-label={`View ${item.name} in 3D`}>
+      <span class="board-item-name"><b aria-hidden="true">{item.type === 'Hot' ? '♨' : item.type === 'Iced' ? '❄' : '✦'}</b> <strong>{item.name}</strong><small>{item.description}</small></span>
+      <span>{priceFor(item, '8 oz')}</span>
+      <span>{item.priceOptions[0].size === 'One size' ? `$${item.priceOptions[0].price}` : priceFor(item, '12 oz')}</span>
+      <span>{priceFor(item, '16 oz')}</span>
+    </button>)}
+  </section>)}
+  <p class="menu-no-results" data-empty-menu hidden>No items match those filters. Try another combination.</p>
+</div>

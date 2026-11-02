@@ -24,16 +24,17 @@ The hex values are design tokens chosen to sit with the supplied raster artwork.
 - **Brand lockup:** the exact wordmark and hand-lettered tagline from the supplied images, used as artwork. The reference does not include an editable font file.
 - **Display companion:** Archivo Black at tight tracking for large headlines and interface headings. It echoes the mass of the custom logo lettering.
 - **Body and controls:** DM Sans, typically 400–800 weight.
+- **Menu categories:** Kaushan Script, echoing the handwritten section labels in the supplied printed menu.
 - **Labels:** uppercase, 10–11 px, bold, with expanded tracking.
 
 ## Components
 
 - Round mascot seal and large wordmark; maintain their original proportions.
 - Burgundy pill CTA and underlined editorial text link.
-- Paper product cards with simple cup art, clear price, and circular add control.
+- Paper product cards with procedural 3D cups on the landing page, CSS fallback art, clear prices, and circular add controls in the app.
 - Sand check-in and rewards panels.
-- Five-position app navigation with a raised order action.
+- Five-position app navigation with a centered order action integrated into the bar.
 
 ## Layout and animation
 
-The landing uses large type, broad negative space, one editorial illustration panel, a typographic club section, three menu previews, and an app preview. The app fills small screens and uses a framed 430 px presentation on desktop. GSAP animates the hero and reveals content on scroll; ScrollTrigger moves the round mark through the club section. Motion is disabled under `prefers-reduced-motion`.
+The landing uses large type, broad negative space, one editorial illustration panel, a typographic club section, three menu previews, and an app preview. The app fills small screens and uses a framed 430 px presentation on desktop. GSAP animates the hero and reveals content on scroll; the club sequence finishes while the section is still central in the viewport. Three.js cups rotate and float with GSAP. Motion is disabled under `prefers-reduced-motion`.
